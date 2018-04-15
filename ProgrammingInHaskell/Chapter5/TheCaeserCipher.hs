@@ -1,13 +1,15 @@
 import Data.Char
 
-let2int :: Char -> Int
-let2int c = ord c - ord 'a'
+type Index = Int
 
-int2let :: Int -> Char
-int2let i = chr $ i + ord 'a'
+alphaToInt :: Char -> Index
+alphaToInt alpha = ord alpha - ord 'a'
+
+intToAlpha :: Index -> Char
+intToAlpha int = chr $ int + ord 'a'
 
 shift :: Int -> Char -> Char
-shift i c | isLower c = int2let $ (i + let2int c) `mod` 26
+shift i c | isLower c = intToAlpha $ (i + alphaToInt c) `mod` 26
           | otherwise = c
           
 encode :: Int -> String -> String
