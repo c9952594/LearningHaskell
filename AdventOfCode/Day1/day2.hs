@@ -1,19 +1,9 @@
 import Data.Char
 import System.Environment
-
-splitString :: (Char -> Bool) -> String -> [String]
-splitString predicate [] = []
-splitString predicate xs = let (word, remaining) = break predicate xs 
-                               strippedRemaining = dropWhile predicate remaining
-                           in
-                               word : splitString predicate strippedRemaining
-
-valueLines :: String -> [[Int]]
-valueLines contents = [splitValues line | line <- splitString (=='\n') contents]
-                      where splitValues line = [read value :: Int | value <- splitString (=='\t') line]
+import MyLib
                                
 answer1 :: String -> Int
-answer1 contents = sum [maximum values - minimum values | values <- valueLines contents]
+answer1 contents = sum [maximum values - minimum values | values <- splitValues (=='\n') (=='\t') (read) contents]
              
 sumOfEvenDivisions :: [Int] -> Int
 sumOfEvenDivisions (value:values) = (sum evenDivisions) + sumOfEvenDivisions values
@@ -21,7 +11,7 @@ sumOfEvenDivisions (value:values) = (sum evenDivisions) + sumOfEvenDivisions val
 sumOfEvenDivisions _ = 0
                     
 answer2 :: String -> Int
-answer2 contents = sum [sumOfEvenDivisions values | values <- valueLines contents]
+answer2 contents = sum [sumOfEvenDivisions values | values <- splitValues (=='\n') (=='\t') (read) contents]
                    
 main :: IO ()
 main = do

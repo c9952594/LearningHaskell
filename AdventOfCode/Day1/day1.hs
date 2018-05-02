@@ -12,13 +12,8 @@ answer1 = answer 1
 answer2 :: [Char] -> Int
 answer2 digits = answer ((length digits) `div` 2) digits
 
-run :: FilePath -> IO ()
-run inputFile = do
-    contents <- readFile inputFile
-    putStrLn . show $ answer1 contents
-    putStrLn . show $ answer2 contents
-
 main :: IO ()
 main = do
-    [inputFile] <- getArgs
-    run inputFile
+    contents <- readFile "day1.txt"
+    putStrLn . show $ answer1 contents
+    putStrLn . show $ answer2 contents
