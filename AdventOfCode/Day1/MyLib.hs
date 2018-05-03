@@ -1,15 +1,17 @@
 module MyLib (
-    splitString, 
-    splitValues
+    mySplit,
+    rotate
 ) where
 
-splitString :: (Char -> Bool) -> String -> [String]
-splitString predicate [] = []
-splitString predicate xs = let (word, remaining) = break predicate xs 
-                               strippedRemaining = dropWhile predicate remaining
-                           in
-                               word : splitString predicate strippedRemaining
+mySplit :: (Char -> Bool) -> (String -> a) -> String -> [a]
+mySplit _ _ [] = [] 
+mySplit predicate transformation  xs = let (word, remaining) = break predicate xs 
+                                           strippedRemaining = dropWhile predicate remaining
+                                       in
+                                           (transformation word) : mySplit predicate transformation strippedRemaining
 
-splitValues :: (Char -> Bool) -> (Char -> Bool) -> (String -> a) -> String -> [[a]]
-splitValues lineDelimiter valueDelimiter transform contents = [splitValues line | line <- splitString lineDelimiter contents]
-                                                              where splitValues line = [transform value | value <- splitString valueDelimiter line]
+rotate :: Int -> [a] -> [a]
+rotate _ [] = []
+rotate n xs = if n < 0
+              then rotate ((length xs) + n) xs
+              else zipWith const (drop n (cycle xs)) xs

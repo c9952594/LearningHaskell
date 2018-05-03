@@ -14,6 +14,6 @@ answer2 digits = answer ((length digits) `div` 2) digits
 
 main :: IO ()
 main = do
-    contents <- readFile "day1.txt"
+    contents <- readFile "data.txt"
     putStrLn . show $ answer1 contents
     putStrLn . show $ answer2 contents

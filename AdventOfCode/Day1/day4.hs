@@ -15,6 +15,6 @@ answer2 lines = sum [1 | line <- lines, (hasDuplicates (\x y -> (sort x) == (sor
 main :: IO ()
 main = do
     fileContents <- readFile "day4.txt"
-    let values = splitValues (=='\n') (==' ') (id) fileContents
+    let values = mySplit (=='\n') (mySplit (==' ') (id)) fileContents
     putStrLn . show $ answer1 values
     putStrLn . show $ answer2 values
